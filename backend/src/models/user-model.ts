@@ -29,10 +29,7 @@ class User {
   static async getByUsernameOrEmail(username: string | null, email: string) {
     const user =
       username === null
-        ? await db
-            .select()
-            .from(usersTable)
-            .where(or(eq(usersTable.email, email)))
+        ? await db.select().from(usersTable).where(eq(usersTable.email, email))
         : await db
             .select()
             .from(usersTable)
