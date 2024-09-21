@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import User from '../models/user-model';
+import User from '../models/User';
 import {
   userRegisterSchema,
   userLoginSchema,
   userProfileUpdateSchema,
-} from '../validations/user-schema';
+} from '../validations/user.schema';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -56,13 +56,15 @@ class UserController {
 
     try {
       const validatedUser = userRegisterSchema.parse(data);
-      const userExist = await User.getByUsernameOrEmail(
-        data.username,
-        data.email
-      );
+      const usernameExist = await User.getByUsername(validatedUser.username);
+      const emailExist = await User.getByEmail(validatedUser.email);
 
-      if (userExist) {
-        return res.status(409).json({ message: 'User already exists' });
+      if (usernameExist) {
+        return res.status(409).json({ message: 'Username already exist' });
+      }
+
+      if (emailExist) {
+        return res.status(409).json({ message: 'Email already exist' });
       }
 
       const saltRounds = 10;
@@ -75,9 +77,13 @@ class UserController {
 
       const user = await User.create(validatedUser);
 
-      const token = jwt.sign({ id: user.id }, JWT_SECRET_KEY, {
-        expiresIn: '1h',
-      });
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role },
+        JWT_SECRET_KEY,
+        {
+          expiresIn: '1h',
+        }
+      );
 
       return res
         .status(201)
@@ -106,10 +112,7 @@ class UserController {
 
     try {
       const validatedUser = userLoginSchema.parse(data);
-      const userExist = await User.getByUsernameOrEmail(
-        null,
-        validatedUser.email
-      );
+      const userExist = await User.getByEmail(validatedUser.email);
 
       const passwordCorrect =
         userExist === null
@@ -122,9 +125,13 @@ class UserController {
           .json({ error: true, message: 'invalid user or password' });
       }
 
-      const token = jwt.sign({ id: userExist.id }, JWT_SECRET_KEY, {
-        expiresIn: '1h',
-      });
+      const token = jwt.sign(
+        { id: userExist.id, email: userExist.email, role: userExist.role },
+        JWT_SECRET_KEY,
+        {
+          expiresIn: '1h',
+        }
+      );
 
       return res
         .status(200)
@@ -137,12 +144,10 @@ class UserController {
         .json({ message: 'User logged in' });
     } catch (error) {
       console.error(error);
-
       if (error instanceof z.ZodError) {
         const errorMessages = error.errors.map((err) => err.message);
         return res.status(400).json({ error: errorMessages });
       }
-
       return res.status(500).json({ message: 'Error on login' });
     }
   }

@@ -26,16 +26,24 @@ class User {
     return userWithoutPassword;
   }
 
-  static async getByUsernameOrEmail(username: string | null, email: string) {
-    const user =
-      username === null
-        ? await db.select().from(usersTable).where(eq(usersTable.email, email))
-        : await db
-            .select()
-            .from(usersTable)
-            .where(
-              or(eq(usersTable.username, username), eq(usersTable.email, email))
-            );
+  static async getByUsername(username: string) {
+    const user = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.username, username));
+
+    if (!user.length) {
+      return null;
+    }
+
+    return user[0];
+  }
+
+  static async getByEmail(email: string) {
+    const user = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email));
 
     if (!user.length) {
       return null;

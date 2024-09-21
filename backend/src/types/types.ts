@@ -1,10 +1,13 @@
-// import { Request } from 'express';
+import { Request } from 'express';
 
-// export interface CustomRequest extends Request {
-//   session: {
-//     user: {
-//       id: string;
-//       email: string;
-//     } | null;
-//   };
-// }
+export interface UserData {
+  id: string;
+  email: string;
+  role: string;
+}
+
+export interface CustomRequest extends Request {
+  session: {
+    user: UserData | null;
+  };
+}
