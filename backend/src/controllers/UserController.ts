@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import User from '../models/user-model';
+import User from '../models/User';
 import {
   userRegisterSchema,
   userLoginSchema,
   userProfileUpdateSchema,
-} from '../validations/user-schema';
+} from '../validations/UserSchema';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
