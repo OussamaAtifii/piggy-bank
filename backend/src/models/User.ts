@@ -1,5 +1,5 @@
 import { db } from '../db/index';
-import { eq, or } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { InsertUser, SelectUser, usersTable } from '../db/schema';
 
 class User {
