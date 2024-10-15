@@ -27,7 +27,7 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
 
 export const banksTable = sqliteTable('banks', {
   id: integer('id').primaryKey(),
-  name: text('name').notNull(),
+  name: text('name').unique().notNull(),
   totalSavings: real('total_savings').notNull().default(0),
   description: text('description'),
   goal: real('goal').notNull().default(0),
