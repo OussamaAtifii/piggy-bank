@@ -3,20 +3,20 @@ import { z } from 'zod';
 // Reglas generales.
 export const baseUserSchema = z.object({
   username: z
-    .string()
+    .string({ required_error: 'Username is required' })
     .min(1, 'Username is required')
     .min(3, 'Username must be at least 3 characters long')
     .max(16, 'Username cannot exceed 16 characters'),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   email: z
-    .string()
+    .string({ required_error: 'Email is required' })
     .min(1, 'Email is required')
     .max(244, 'Email cannot exceed 244 characters')
     .email('The email address in invalid')
     .toLowerCase(),
   password: z
-    .string()
+    .string({ required_error: 'Password is required' })
     .min(1, 'Password is required')
     .min(8, 'Password must be at least 8 characters long')
     .max(255, 'Password cannot exceed 255 characters')
@@ -36,8 +36,8 @@ export const userRegisterSchema = baseUserSchema.pick({
 
 // Reglas para el inicio de sesión.
 export const userLoginSchema = z.object({
-  email: z.string().toLowerCase(),
-  password: z.string(),
+  email: z.string({ required_error: 'Email is required' }).toLowerCase(),
+  password: z.string({ required_error: 'Password is required' }),
 });
 
 // Reglas para la actualización el perfil.
