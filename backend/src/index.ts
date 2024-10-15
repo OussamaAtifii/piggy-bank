@@ -2,8 +2,8 @@ import express, { Express, NextFunction, Request, Response } from 'express';
 import { PORT } from './config/config';
 import { corsMiddleware } from './middlewares/corsMiddleware';
 import cookieParser from 'cookie-parser';
-import authMiddleware from './middlewares/authenticationMiddleware';
 import userRouter from './routes/users';
+import bankRouter from './routes/banks';
 
 const app: Express = express();
 
@@ -18,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/user', userRouter);
+app.use('/bank', bankRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
