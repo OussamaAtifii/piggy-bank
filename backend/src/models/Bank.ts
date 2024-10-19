@@ -25,6 +25,15 @@ class Bank {
 
     return bank;
   }
+
+  static async getById(id: number) {
+    const [bank] = await db
+      .select()
+      .from(banksTable)
+      .where(eq(banksTable.id, id));
+
+    return bank;
+  }
 }
 
 export default Bank;
