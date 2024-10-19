@@ -11,9 +11,7 @@ export default function authenticationMiddleware(
   const token = req.cookies.token;
 
   if (!token) {
-    return res
-      .status(401)
-      .json({ mensaje: 'Token de autenticación no proporcionado.' });
+    return res.status(401).json({ message: 'Token not provided' });
   }
 
   req.session = { user: null };
