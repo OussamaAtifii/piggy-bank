@@ -1,17 +1,17 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import "./index.css"
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
-import { Login } from "./components/auth/Login.jsx";
-import { Register } from "./components/auth/Register.jsx";
+import { Login } from "./components/auth/Login.jsx"
+import { Register } from "./components/auth/Register.jsx"
+import Home from "./Home.jsx"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
     errorElement: <h1>404 Not Found</h1>,
   },
   {
@@ -22,10 +22,10 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-]);
+])
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>
-);
+)
