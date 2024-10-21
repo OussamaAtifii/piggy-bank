@@ -118,7 +118,7 @@ export function Login() {
           </div>
         </div>
       </div>
-      <div className="hidden bg-primary rounded-3xl md:flex items-center justify-center h-full">
+      <div className="hidden bg-primary-500 rounded-3xl md:flex items-center justify-center h-full">
         <img src="/src/assets/piggybank-logo.png" alt="Piggybank logo" />
       </div>
     </form>

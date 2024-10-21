@@ -142,7 +142,7 @@ export function Register() {
 
       {/* Imagen */}
       <div className="hidden bg-primary-500 rounded-3xl md:flex items-center justify-center h-full">
-        <img src="../assets/piggybank-logo.png" alt="Piggybank logo" />
+        <img src="/src/assets/piggybank-logo.png" alt="Piggybank logo" />
       </div>
     </form>
   )
