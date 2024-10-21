@@ -1,17 +1,17 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { userRegistrationSchema } from '../schemas/userSchema';
-import { useNavigate } from 'react-router-dom';
-import { FacebookIcon, GithubIcon, GoogleIcon } from '../icons/Icons';
-import RegisterSocialIcons from '../components/RegisterSocialIcons';
-import UserIcon from '../icons/User';
-import LockIcon from '../icons/Lock';
-import EmailIcon from '../icons/Email';
-import FormInput from '../components/FormInput';
-import Spinner from '../icons/Spinner';
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { userRegistrationSchema } from "../schemas/userSchema"
+import { useNavigate } from "react-router-dom"
+import { FacebookIcon, GithubIcon, GoogleIcon } from "../icons/Icons"
+import RegisterSocialIcons from "../components/RegisterSocialIcons"
+import UserIcon from "../icons/User"
+import LockIcon from "../icons/Lock"
+import EmailIcon from "../icons/Email"
+import FormInput from "../components/FormInput"
+import Spinner from "../icons/Spinner"
 
 export function Register() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -19,35 +19,35 @@ export function Register() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(userRegistrationSchema),
-  });
+  })
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch('http://localhost:3000/user/register', {
-        method: 'POST',
+      const res = await fetch("http://localhost:3000/user/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
+      })
 
       // Si la respuesta no es válida, lanza un error
       if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error[0] || 'An error occurred while registering');
+        const { error } = await res.json()
+        throw new Error(error[0] || "An error occurred while registering")
       }
 
-      console.log(data);
+      console.log(data)
 
       // Redirige al usuario a la página de inicio
-      return navigate('/');
+      return navigate("/")
     } catch (error) {
-      setError('root', {
-        type: 'manual',
-        message: error.message || 'Registration failed',
-      });
+      setError("root", {
+        type: "manual",
+        message: error.message || "Registration failed",
+      })
     }
-  };
+  }
 
   return (
     <form
@@ -66,7 +66,7 @@ export function Register() {
             icon={EmailIcon}
             register={register}
             errors={errors}
-            aria-invalid={errors.email ? 'true' : 'false'}
+            aria-invalid={errors.email ? "true" : "false"}
           />
 
           {/* Username input */}
@@ -77,7 +77,7 @@ export function Register() {
             icon={UserIcon}
             register={register}
             errors={errors}
-            aria-invalid={errors.username ? 'true' : 'false'}
+            aria-invalid={errors.username ? "true" : "false"}
           />
 
           {/* Password input */}
@@ -88,7 +88,7 @@ export function Register() {
             icon={LockIcon}
             register={register}
             errors={errors}
-            aria-invalid={errors.password ? 'true' : 'false'}
+            aria-invalid={errors.password ? "true" : "false"}
           />
 
           {/* Confirm password input */}
@@ -99,7 +99,7 @@ export function Register() {
             icon={LockIcon}
             register={register}
             errors={errors}
-            aria-invalid={errors.confirmPassword ? 'true' : 'false'}
+            aria-invalid={errors.confirmPassword ? "true" : "false"}
           />
 
           <button
@@ -113,7 +113,7 @@ export function Register() {
                 <span>Loading...</span>
               </div>
             ) : (
-              'Register'
+              "Register"
             )}
           </button>
 
@@ -133,9 +133,9 @@ export function Register() {
 
           {/* Socialite Login */}
           <div className="flex gap-4 justify-center">
-            <RegisterSocialIcons icon={GoogleIcon} href={'/'} />
-            <RegisterSocialIcons icon={GithubIcon} href={'/'} />
-            <RegisterSocialIcons icon={FacebookIcon} href={'/'} />
+            <RegisterSocialIcons icon={GoogleIcon} href={"/"} />
+            <RegisterSocialIcons icon={GithubIcon} href={"/"} />
+            <RegisterSocialIcons icon={FacebookIcon} href={"/"} />
           </div>
         </div>
       </div>
@@ -145,5 +145,5 @@ export function Register() {
         <img src="../assets/piggybank-logo.png" alt="Piggybank logo" />
       </div>
     </form>
-  );
+  )
 }

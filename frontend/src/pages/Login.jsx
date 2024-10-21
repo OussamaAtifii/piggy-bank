@@ -1,16 +1,16 @@
-import { FacebookIcon, GithubIcon, GoogleIcon } from '../icons/Icons';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { userLoginSchema } from '../schemas/userSchema';
-import FormInput from '../components/FormInput';
-import EmailIcon from '../icons/Email';
-import LockIcon from '../icons/Lock';
-import Spinner from '../icons/Spinner';
-import RegisterSocialIcons from '../components/RegisterSocialIcons';
-import { useNavigate } from 'react-router-dom';
+import { FacebookIcon, GithubIcon, GoogleIcon } from "../icons/Icons"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import FormInput from "../components/FormInput"
+import EmailIcon from "../icons/Email"
+import LockIcon from "../icons/Lock"
+import Spinner from "../icons/Spinner"
+import RegisterSocialIcons from "../components/RegisterSocialIcons"
+import { useNavigate } from "react-router-dom"
+import { userLoginSchema } from "../schemas/userSchema"
 
 export function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -18,38 +18,38 @@ export function Login() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(userLoginSchema),
-  });
+  })
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch('http://localhost:3000/user/login', {
-        method: 'POST',
+      const res = await fetch("http://localhost:3000/user/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
+      })
 
       // Si la respuesta no es válida, lanza un error
       if (!res.ok) {
-        console.log('Im here');
+        console.log("Im here")
 
-        const { message } = await res.json();
+        const { message } = await res.json()
 
-        throw new Error(message || 'An error occurred while logging in');
+        throw new Error(message || "An error occurred while logging in")
       }
 
-      console.log(data);
+      console.log(data)
 
       // Redirige al usuario a la página de inicio
-      return navigate('/');
+      return navigate("/")
     } catch (error) {
-      setError('root', {
-        type: 'manual',
-        message: error.message || 'Login failed',
-      });
+      setError("root", {
+        type: "manual",
+        message: error.message || "Login failed",
+      })
     }
-  };
+  }
 
   return (
     <form
@@ -70,7 +70,7 @@ export function Login() {
             icon={EmailIcon}
             register={register}
             errors={errors}
-            aria-invalid={errors.email ? 'true' : 'false'}
+            aria-invalid={errors.email ? "true" : "false"}
           />
 
           {/* Password input */}
@@ -81,7 +81,7 @@ export function Login() {
             icon={LockIcon}
             register={register}
             errors={errors}
-            aria-invalid={errors.password ? 'true' : 'false'}
+            aria-invalid={errors.password ? "true" : "false"}
           />
 
           <button
@@ -95,7 +95,7 @@ export function Login() {
                 <span>Loading...</span>
               </div>
             ) : (
-              'Login'
+              "Login"
             )}
           </button>
           <div className="min-h-8">
@@ -112,9 +112,9 @@ export function Login() {
           </div>
           {/* Socialite Login */}
           <div className="flex gap-4 justify-center">
-            <RegisterSocialIcons icon={GoogleIcon} href={'/'} />
-            <RegisterSocialIcons icon={GithubIcon} href={'/'} />
-            <RegisterSocialIcons icon={FacebookIcon} href={'/'} />
+            <RegisterSocialIcons icon={GoogleIcon} href={"/"} />
+            <RegisterSocialIcons icon={GithubIcon} href={"/"} />
+            <RegisterSocialIcons icon={FacebookIcon} href={"/"} />
           </div>
         </div>
       </div>
@@ -122,5 +122,5 @@ export function Login() {
         <img src="/src/assets/piggybank-logo.png" alt="Piggybank logo" />
       </div>
     </form>
-  );
+  )
 }
