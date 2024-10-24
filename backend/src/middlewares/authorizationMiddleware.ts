@@ -9,7 +9,9 @@ export default function authorizationMiddleware(
   const userId = req.session.user?.id;
 
   try {
-    if (String(id) !== userId) {
+    if (String(id) !== String(userId)) {
+      console.log(typeof id);
+      console.log(typeof userId);
       return res.status(403).json({
         message: "You don't have permission to perform this action",
       });

@@ -1,5 +1,4 @@
-import express, { Express, NextFunction, Request, Response } from 'express';
-import { PORT } from './config/config';
+import express, { Express, Request, Response } from 'express';
 import { corsMiddleware } from './middlewares/corsMiddleware';
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/users';

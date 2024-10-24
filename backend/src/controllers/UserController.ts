@@ -81,6 +81,7 @@ class UserController {
       validatedUser.password = hassedPassword;
 
       const user = await User.create(validatedUser);
+      const { password, ...userWithoutPassword } = user;
 
       const token = jwt.sign(
         { id: user.id, email: user.email, role: user.role },
@@ -98,7 +99,7 @@ class UserController {
           sameSite: 'none',
           maxAge: 3600000,
         })
-        .json({ message: 'User registered' });
+        .json(userWithoutPassword);
     } catch (error) {
       console.error(error);
 
@@ -160,12 +161,13 @@ class UserController {
     try {
       const validatedUser = userProfileUpdateSchema.parse(data);
       const user = await User.update(Number(id), validatedUser);
+      const { password, ...userWithoutPassword } = user;
 
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      return res.status(200).json({ message: 'User updated' });
+      return res.status(200).json(userWithoutPassword);
     } catch (error) {
       console.error(error);
 
