@@ -4,7 +4,7 @@ const Group = (props) => (
     width="44"
     height="44"
     viewBox="0 0 24 24"
-    strokeWidth="1.5"
+    strokeWidth="1.3"
     stroke="currentColor"
     fill="none"
     strokeLinecap="round"
