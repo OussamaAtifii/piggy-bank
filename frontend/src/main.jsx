@@ -1,31 +1,31 @@
-import { StrictMode } from "react"
-import { createRoot } from "react-dom/client"
-import "./index.css"
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Home from "./Home.jsx"
-import { Login } from "./pages/Login.jsx"
-import { Register } from "./pages/Register.jsx"
+import Home from './Home.jsx';
+import { Login } from './pages/Login.jsx';
+import { Register } from './pages/Register.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Home />,
     errorElement: <h1>404 Not Found</h1>,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
-])
+]);
 
-createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>
-)
+);
